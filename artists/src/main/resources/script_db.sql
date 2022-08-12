@@ -1,0 +1,3 @@
+CREATE DATABASE artists;
+CREATE USER movie_user WITH ENCRYPTED PASSWORD 'nevermind';
+GRANT ALL PRIVILEGES ON DATABASE artists TO movie_user;

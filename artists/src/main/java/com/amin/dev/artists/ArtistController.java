@@ -1,5 +1,6 @@
 package com.amin.dev.artists;
 
+import com.amin.dev.clients.artists.ArtistRequest;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,8 +16,8 @@ public class ArtistController {
     private final ArtistService service;
 
     @PostMapping
-    public Artist registerArtist(@RequestBody ArtistRequest artistRequest) {
+    public Integer registerArtist(@RequestBody ArtistRequest artistRequest) {
         log.info("Manage Artist : " + artistRequest.firstName() + " - " + artistRequest.lastName());
-        return service.addArtist(artistRequest);
+        return service.addArtist(artistRequest).getId();
     }
 }

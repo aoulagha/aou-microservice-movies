@@ -10,16 +10,22 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @Slf4j
-@RequestMapping("/api/manager/movies")
+@RequestMapping("/api/manager")
 @AllArgsConstructor
 public class MovieController {
 
     private final MovieService service;
 
-    @PostMapping
+    @PostMapping("/movies")
     public Movie registerMovie(@RequestBody MovieRequest movieRequest) throws MovieExistsException {
         log.info("Register New Movie : " + movieRequest.originalName());
         return service.addNewMovie(movieRequest);
+    }
+
+    @PostMapping("/artmovies")
+    public void registerMovieArtists(@RequestBody MovieArtistsRequest movieRequest) {
+        log.info("Register New Movie with artists : " + movieRequest.originalName());
+        service.saveMovieWithArtists(movieRequest);
     }
 
 

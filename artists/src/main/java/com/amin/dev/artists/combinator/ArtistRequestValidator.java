@@ -1,10 +1,9 @@
 package com.amin.dev.artists.combinator;
 
-import com.amin.dev.artists.ArtistRequest;
+import com.amin.dev.clients.artists.ArtistRequest;
 
 import java.time.LocalDate;
 import java.util.Optional;
-import java.util.function.Consumer;
 import java.util.function.Function;
 
 import static com.amin.dev.artists.combinator.ValidationResult.*;

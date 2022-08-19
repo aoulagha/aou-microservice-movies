@@ -2,6 +2,7 @@ package com.amin.dev.artists;
 
 import com.amin.dev.artists.combinator.ValidationResult;
 import com.amin.dev.artists.error.ArtistValidationException;
+import com.amin.dev.clients.artists.ArtistRequest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -41,7 +42,7 @@ class ArtistServiceTest {
         String firstName = "John";
         String lastName = "Pesci";
         LocalDate bDate = LocalDate.of(1946, 2, 9);
-        ArtistRequest request = new ArtistRequest(firstName, lastName, bDate);
+        ArtistRequest request = new ArtistRequest(firstName, lastName, bDate, "actor");
         given(repository.searchByFirstNameIgnoreCaseAndLastNameIgnoreCase(firstName, lastName))
                 .willReturn(Optional.empty());
 
@@ -63,11 +64,13 @@ class ArtistServiceTest {
         String firstName = "John";
         String lastName = "Pesci";
         LocalDate bDate = LocalDate.of(1946, 2, 9);
-        ArtistRequest request = new ArtistRequest(firstName, lastName, bDate);
+        Integer idArtist = 1;
+        ArtistRequest request = new ArtistRequest(firstName, lastName, bDate, "actor");
 
         Artist artist = Artist.builder().firstName(firstName)
                 .lastName(lastName)
-                .birthDate(bDate).build();
+                .birthDate(bDate)
+                .id(idArtist).build();
 
         given(repository.searchByFirstNameIgnoreCaseAndLastNameIgnoreCase(firstName, lastName))
                 .willReturn(Optional.of(artist));
@@ -75,8 +78,9 @@ class ArtistServiceTest {
         // when
         Artist getArtist = service.addArtist(request);
 
-        // then
         assertThat(getArtist).isEqualTo(artist);
+
+        // then
         verify(repository, never()).saveAndFlush(any());
     }
 
@@ -86,7 +90,7 @@ class ArtistServiceTest {
         String firstName = "";
         String lastName = "Pesci";
         LocalDate bDate = LocalDate.of(1946, 2, 9);
-        ArtistRequest request = new ArtistRequest(firstName, lastName, bDate);
+        ArtistRequest request = new ArtistRequest(firstName, lastName, bDate, "actor");
 
         // when
 
@@ -102,7 +106,7 @@ class ArtistServiceTest {
         String firstName = "John";
         String lastName = "Pesci";
         LocalDate bDate = LocalDate.of(2023, 2, 9);
-        ArtistRequest request = new ArtistRequest(firstName, lastName, bDate);
+        ArtistRequest request = new ArtistRequest(firstName, lastName, bDate, "actor");
 
         // when
 

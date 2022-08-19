@@ -1,8 +1,8 @@
 package com.amin.dev.artists;
 
-import com.amin.dev.artists.combinator.ArtistRequestValidator;
 import com.amin.dev.artists.combinator.ValidationResult;
 import com.amin.dev.artists.error.ArtistValidationException;
+import com.amin.dev.clients.artists.ArtistRequest;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -22,7 +22,7 @@ public class ArtistService {
      * @param artistRequest Param Artist
      * @return the Artist created or if exists
      */
-    public Artist addArtist(ArtistRequest artistRequest) {
+    public Artist addArtist(ArtistRequest artistRequest) throws ArtistValidationException {
         // Validate Artist
         ValidationResult result = isNameValid()
                 .and(isYearValid())
@@ -41,11 +41,12 @@ public class ArtistService {
             return artist.get();
         }
 
-        // Add new Artist
-        Artist newArtist = Artist.builder().firstName(artistRequest.firstName())
-                .lastName(artistRequest.lastName())
-                .birthDate(artistRequest.birthDate()).build();
+            // Add new Artist
+            Artist newArtist = Artist.builder().firstName(artistRequest.firstName())
+                    .lastName(artistRequest.lastName())
+                    .birthDate(artistRequest.birthDate()).build();
 
-        return repository.saveAndFlush(newArtist);
+            return repository.saveAndFlush(newArtist);
+
     }
 }

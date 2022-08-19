@@ -32,7 +32,7 @@ class MovieServiceTest {
 
     @BeforeEach
     void setUp() {
-        service = new MovieService(repository);
+        service = new MovieService(repository, null);
     }
 
     @Test

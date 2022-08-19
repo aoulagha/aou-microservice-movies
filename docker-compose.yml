@@ -1,0 +1,47 @@
+services:
+  postgres:
+    image: postgres:14.5-alpine
+    container_name: postgres
+    environment:
+      POSTGRES_USER: aoulagha
+      POSTGRES_PASSWORD: nevermind
+    volumes:
+      - postgres:/data/postgres
+    ports:
+      - 54932:5432
+    networks:
+      - postgresnet
+    restart: unless-stopped
+  pgadmin:
+    image: dpage/pgadmin4:6
+    container_name: pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: oulaghaamine@gmail.com
+      PGADMIN_DEFAULT_PASSWORD: nevermind
+      PGADMIN_CONFIG_SERVER_MODE: 'False'
+    volumes:
+      - pgadmin:/var/lib/pgadmin
+    ports:
+      - 3000:80
+    networks:
+      - postgresnet
+    restart: unless-stopped
+    depends_on:
+      - postgres
+  zipkin:
+    image: openzipkin/zipkin:2
+    container_name: zipkin
+    ports:
+      - "9411:9411"
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    container_name: rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+networks:
+  postgresnet:
+    driver: bridge
+volumes:
+  postgres: {}
+  pgadmin: {}

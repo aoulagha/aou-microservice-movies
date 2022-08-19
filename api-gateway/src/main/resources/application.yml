@@ -1,0 +1,20 @@
+server:
+  port: 8083
+spring:
+  application:
+    name: api-gw
+  zipkin:
+    base-url: http://127.0.0.1:9411/
+  cloud:
+    gateway:
+      routes:
+        - id: movie
+          uri: lb://MOVIE
+          predicates:
+            - Path=/api/manager/**movies/**
+eureka:
+  client:
+    service-url:
+      defaultZone: ${EUREKA_URI:http://localhost:8761/eureka}
+    fetch-registry: true
+    register-with-eureka: true

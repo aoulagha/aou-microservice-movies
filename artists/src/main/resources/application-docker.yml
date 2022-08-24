@@ -1,0 +1,27 @@
+server:
+  port: 8081
+
+spring:
+  application:
+    name: artist
+  zipkin:
+    base-url: http://zipkin:9411/
+  datasource:
+    url: jdbc:postgresql://postgres:5432/artists
+    username: movie_user
+    password: nevermind
+  jpa:
+    database: POSTGRESQL
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+    show-sql: true
+eureka:
+  client:
+    service-url:
+      defaultZone: ${EUREKA_URI:http://eureka-server:8761/eureka}
+    fetch-registry: true
+    register-with-eureka: true

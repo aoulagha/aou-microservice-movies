@@ -35,4 +35,6 @@ public class Movie {
 
     private Integer releaseDate;
 
+    private String summary;
+
 }

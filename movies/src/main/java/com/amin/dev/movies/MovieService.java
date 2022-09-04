@@ -5,11 +5,15 @@ import com.amin.dev.clients.artists.ArtistClient;
 import com.amin.dev.clients.artists.ArtistRequest;
 import com.amin.dev.clients.notification.NotificationClient;
 import com.amin.dev.clients.notification.NotificationRequest;
+import com.amin.dev.clients.role.ActorRequest;
+import com.amin.dev.clients.role.DirectorRequest;
+import com.amin.dev.clients.role.RoleClient;
 import com.amin.dev.movies.combinator.ValidationResult;
 import com.amin.dev.movies.error.MovieException;
 import com.amin.dev.movies.error.MovieExistsException;
 import com.amin.dev.movies.error.MovieValidationException;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -31,6 +35,8 @@ public class MovieService {
     private final MovieRepository repository;
 
     private final ArtistClient artistClient;
+
+    private final RoleClient roleClient;
     private final RabbitMqMessageProducer messageProducer;
 
     /**
@@ -99,8 +105,22 @@ public class MovieService {
         }
 
         Consumer<ArtistRequest> artistRequestConsumer = artistRequest -> {
-            Integer integer = artistClient.registerArtist(artistRequest);
-            System.out.println(artistRequest + "Id " + integer);
+            Integer idArtist =
+                    artistClient.registerArtist(artistRequest);
+            log.info(artistRequest +
+                    "Id " + idArtist);
+            if  ("director".equals(artistRequest.role())) {
+                DirectorRequest director
+                        = new DirectorRequest(savedMovie.getId(), idArtist);
+                roleClient.registerDirectorRole
+                        (director);
+            } else if ("actor".equals(artistRequest.role())) {
+                ActorRequest actor =
+                        new ActorRequest(savedMovie.getId(),
+                                idArtist,
+                                artistRequest.actingRole());
+                roleClient.registerActorRole(actor);
+            }
         };
 
         // Get distinct artist (case when director = actor)

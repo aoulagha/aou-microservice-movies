@@ -41,8 +41,10 @@ class ArtistServiceTest {
         // given
         String firstName = "John";
         String lastName = "Pesci";
+        String roleActing = "Joey";
         LocalDate bDate = LocalDate.of(1946, 2, 9);
-        ArtistRequest request = new ArtistRequest(firstName, lastName, bDate, "actor");
+        ArtistRequest request =
+                new ArtistRequest(firstName, lastName, bDate, "actor", roleActing);
         given(repository.searchByFirstNameIgnoreCaseAndLastNameIgnoreCase(firstName, lastName))
                 .willReturn(Optional.empty());
 
@@ -61,11 +63,13 @@ class ArtistServiceTest {
     @Test
     public void addArtistGetArtistWhenExisting() {
         // given
-        String firstName = "John";
+        String firstName = "Joe";
         String lastName = "Pesci";
+        String roleActing = "Joey";
         LocalDate bDate = LocalDate.of(1946, 2, 9);
         Integer idArtist = 1;
-        ArtistRequest request = new ArtistRequest(firstName, lastName, bDate, "actor");
+        ArtistRequest request =
+                new ArtistRequest(firstName, lastName, bDate, "actor", roleActing);
 
         Artist artist = Artist.builder().firstName(firstName)
                 .lastName(lastName)
@@ -88,9 +92,11 @@ class ArtistServiceTest {
     public void fireExceptionWhenNameNonValid() {
         // given
         String firstName = "";
+        String roleActing = "Joey";
         String lastName = "Pesci";
         LocalDate bDate = LocalDate.of(1946, 2, 9);
-        ArtistRequest request = new ArtistRequest(firstName, lastName, bDate, "actor");
+        ArtistRequest request =
+                new ArtistRequest(firstName, lastName, bDate, "actor", roleActing);
 
         // when
 
@@ -105,8 +111,10 @@ class ArtistServiceTest {
         // given
         String firstName = "John";
         String lastName = "Pesci";
+        String roleActing = "Joey";
         LocalDate bDate = LocalDate.of(2023, 2, 9);
-        ArtistRequest request = new ArtistRequest(firstName, lastName, bDate, "actor");
+        ArtistRequest request =
+                new ArtistRequest(firstName, lastName, bDate, "actor", roleActing);
 
         // when
 

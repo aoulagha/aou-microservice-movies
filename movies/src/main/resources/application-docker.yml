@@ -1,0 +1,31 @@
+server:
+  port: 8080
+
+spring:
+  main:
+    allow-bean-definition-overriding: true
+  application:
+    name: movie
+  zipkin:
+    base-url: http://zipkin:9411/
+  rabbitmq:
+    addresses: rabbitmq:5672
+  datasource:
+    url: jdbc:postgresql://postgres:5432/movies
+    username: movie_user
+    password: nevermind
+  jpa:
+    database: POSTGRESQL
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+    show-sql: true
+eureka:
+  client:
+    service-url:
+      defaultZone: ${EUREKA_URI:http://eureka-server:8761/eureka}
+    fetch-registry: true
+    register-with-eureka: true

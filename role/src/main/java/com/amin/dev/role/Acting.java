@@ -1,4 +1,4 @@
-package com.amin.dev.movies;
+package com.amin.dev.role;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -12,20 +12,24 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class Directing {
+public class Acting {
 
     @Id
     @SequenceGenerator(
-            name = "dir_id_sequence",
-            sequenceName = "dir_id_sequence"
+            name = "act_id_sequence",
+            sequenceName = "act_id_sequence"
     )
     @GeneratedValue(
             strategy = GenerationType.SEQUENCE,
-            generator = "dir_id_sequence"
+            generator = "act_id_sequence"
     )
     Integer id;
 
     Integer idMovie;
 
     Integer idActor;
+
+    String roleName;
+
+
 }
